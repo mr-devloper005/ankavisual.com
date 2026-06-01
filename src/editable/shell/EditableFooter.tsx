@@ -1,8 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export function EditableFooter() {
   const year = new Date().getFullYear()
+  const { session, logout } = useEditableLocalAuthSession()
 
   return (
     <footer className="border-t border-white/10 bg-[#0a0c10] text-white">

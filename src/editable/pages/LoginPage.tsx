@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { buildPageMetadata } from '@/lib/seo'
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 import { EditableLocalLoginForm } from '@/editable/components/EditableLocalAuthForms'
+import { pagesContent } from '@/editable/content/pages.content'
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({ path: '/login', title: 'Login', description: 'Sign in to access your visual profile and publishing workspace.' })
