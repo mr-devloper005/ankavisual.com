@@ -76,7 +76,7 @@ export function TaskDetailView({ task, post, related, comments = [] }: { task: T
 
   return (
     <EditableSiteShell>
-      <main style={detailVars} className="bg-[var(--detail-bg)] text-[var(--detail-text)]">
+      <main style={detailVars} className="bg-[#ececec] text-[#0a0c10]">
         {task === 'listing' ? <ListingDetail post={post} related={related} /> : null}
         {task === 'classified' ? <ClassifiedDetail post={post} related={related} /> : null}
         {task === 'image' ? <ImageDetail post={post} related={related} /> : null}
@@ -92,7 +92,7 @@ export function TaskDetailView({ task, post, related, comments = [] }: { task: T
 function BackLink({ task }: { task: TaskKey }) {
   const taskConfig = getTaskConfig(task)
   return (
-    <Link href={taskConfig?.route || '/'} className="inline-flex items-center gap-2 rounded-full border border-[var(--editable-border)] bg-white/70 px-4 py-2 text-sm font-black">
+    <Link href={taskConfig?.route || '/'} className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-black">
       <ArrowLeft className="h-4 w-4" /> Back to {taskConfig?.label || 'posts'}
     </Link>
   )
@@ -188,25 +188,41 @@ function ClassifiedDetail({ post, related }: { post: SitePost; related: SitePost
 
 function ImageDetail({ post, related }: { post: SitePost; related: SitePost[] }) {
   const images = getImages(post)
+  const hero = images[0] || '/placeholder.svg?height=900&width=1400'
+  const gallery = (images.length ? images.slice(1) : ['/placeholder.svg?height=900&width=1200', '/placeholder.svg?height=900&width=1200', '/placeholder.svg?height=900&width=1200'])
   return (
-    <section className="mx-auto max-w-[var(--editable-container)] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+    <section className="mx-auto max-w-[var(--editable-container)] px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
       <BackLink task="image" />
-      <div className="mt-8 grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
-        <aside className="rounded-[2.5rem] border border-[var(--editable-border)] bg-white p-7 lg:sticky lg:top-24 lg:self-start">
-          <div className="inline-flex items-center gap-2 rounded-full bg-[var(--detail-text)] px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-[var(--detail-bg)]"><Camera className="h-4 w-4" /> Image story</div>
-          <h1 className="mt-6 text-4xl font-black leading-[0.98] tracking-[-0.07em] sm:text-5xl">{post.title}</h1>
-          <p className="mt-5 text-base leading-8 opacity-70">{summaryText(post)}</p>
-          <BodyContent post={post} compact />
-        </aside>
-        <div className="columns-1 gap-5 space-y-5 md:columns-2">
-          {(images.length ? images : ['/placeholder.svg?height=900&width=1200']).map((image, index) => (
-            <figure key={`${image}-${index}`} className="break-inside-avoid overflow-hidden rounded-[2rem] border border-[var(--editable-border)] bg-white shadow-sm">
-              <img src={image} alt="" className="w-full object-cover" />
-              {index === 0 ? <figcaption className="p-5 text-sm font-bold opacity-65">Featured visual from this image post.</figcaption> : null}
-            </figure>
-          ))}
+
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-white/10 bg-[#090c13] text-white shadow-[0_22px_70px_rgba(0,0,0,0.45)]">
+        <div className="relative">
+          <img src={hero} alt={post.title} className="h-[44vh] w-full object-cover sm:h-[52vh] lg:h-[64vh]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_20%,rgba(0,0,0,0.75)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#9FCB98] backdrop-blur">
+              <Camera className="h-4 w-4" /> Visual feature
+            </div>
+            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[0.95] tracking-[-0.06em] sm:text-5xl lg:text-6xl">{post.title}</h1>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-white/80 sm:text-base">{summaryText(post) || 'A curated image story with cinematic composition and editorial detail.'}</p>
+          </div>
         </div>
-      </div>
+
+        <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
+          <aside className="rounded-[1.4rem] border border-white/15 bg-white/5 p-5 backdrop-blur">
+            <h2 className="text-xs font-black uppercase tracking-[0.22em] text-[#9FCB98]">Story notes</h2>
+            <BodyContent post={post} compact />
+          </aside>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {gallery.slice(0, 6).map((image, index) => (
+              <figure key={`${image}-${index}`} className={`${index % 3 === 0 ? 'sm:col-span-2' : ''} overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/5`}>
+                <img src={image} alt={`Gallery visual ${index + 1}`} className={`${index % 3 === 0 ? 'h-64' : 'h-44'} w-full object-cover`} />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </article>
+
       <div className="mt-10"><RelatedPanel task="image" post={post} related={related} /></div>
     </section>
   )
@@ -263,21 +279,35 @@ function ProfileDetail({ post, related }: { post: SitePost; related: SitePost[] 
   const role = getField(post, ['role', 'designation', 'company', 'location'])
   const website = getField(post, ['website', 'url'])
   const email = getField(post, ['email'])
+  const hero = images[1] || images[0] || '/placeholder.svg?height=900&width=1400'
   return (
-    <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[420px_minmax(0,1fr)] lg:px-8 lg:py-16">
-      <aside className="rounded-[2.7rem] border border-[var(--editable-border)] bg-white p-8 text-center shadow-[0_30px_90px_rgba(15,23,42,0.08)] lg:sticky lg:top-24 lg:self-start">
-        <BackLink task="profile" />
-        <div className="mx-auto mt-10 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-[var(--detail-bg)] ring-1 ring-[var(--editable-border)]">
-          {images[0] ? <img src={images[0]} alt="" className="h-full w-full object-cover" /> : <UserRound className="h-16 w-16 opacity-45" />}
+    <section className="mx-auto max-w-[var(--editable-container)] px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
+      <article className="mt-6 overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-sm">
+        <div className="relative h-56 sm:h-72 lg:h-80">
+          <img src={hero} alt={post.title} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,7,13,0.15),rgba(5,7,13,0.72))]" />
         </div>
-        <h1 className="mt-6 text-4xl font-black leading-[0.98] tracking-[-0.07em]">{post.title}</h1>
-        {role ? <p className="mt-3 text-xs font-black uppercase tracking-[0.18em] text-[var(--detail-accent)]">{role}</p> : null}
-        <ContactAction website={website} email={email} />
-      </aside>
-      <article className="rounded-[2.7rem] border border-[var(--editable-border)] bg-white p-7 shadow-sm sm:p-10">
-        <BodyContent post={post} />
-        <ImageStrip images={images.slice(1)} label="Profile gallery" />
-        <RelatedPanel task="profile" post={post} related={related} />
+
+        <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[380px_minmax(0,1fr)]">
+          <aside className="-mt-24 self-start rounded-[1.5rem] border border-black/10 bg-white p-7 text-center shadow-sm">
+            <div className="mx-auto flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#ececec] shadow-sm">
+              {images[0] ? <img src={images[0]} alt="" className="h-full w-full object-cover" /> : <UserRound className="h-16 w-16 opacity-45" />}
+            </div>
+            <h1 className="mt-5 text-4xl font-black leading-[0.98] tracking-[-0.07em]">{post.title}</h1>
+            {role ? <p className="mt-3 text-xs font-black uppercase tracking-[0.18em] text-[#346739]">{role}</p> : null}
+            <ContactAction website={website} email={email} />
+          </aside>
+
+          <div className="rounded-[1.5rem] border border-black/10 bg-[#f8f8f8] p-6">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#346739]">Profile overview</p>
+            <BodyContent post={post} />
+            <ImageStrip images={images.slice(1)} label="Profile gallery" />
+          </div>
+        </div>
+
+        <div className="px-6 pb-8 sm:px-8">
+          <RelatedPanel task="profile" post={post} related={related} />
+        </div>
       </article>
     </section>
   )
@@ -351,18 +381,6 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
           <div className="mt-4 grid gap-3 text-sm font-bold opacity-75">
             <p className="inline-flex items-center gap-2"><Tag className="h-4 w-4" /> Task: {taskConfig?.label || task}</p>
             <p className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Site: {SITE_CONFIG.name}</p>
-            {post.publishedAt ? <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p> : null}
-          </div>
-        </div>
-      ) : null}
-      {related.length ? (
-        <div className="rounded-[2rem] border border-[var(--editable-border)] bg-white/70 p-5 backdrop-blur">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-black tracking-[-0.04em]">More like this</h2>
-            <Link href={taskConfig?.route || '/'} className="text-xs font-black uppercase tracking-[0.16em] opacity-55">View all</Link>
-          </div>
-          <div className="mt-5 grid gap-3">
-            {related.map((item) => <RelatedCard key={item.id || item.slug} task={task} post={item} />)}
           </div>
         </div>
       ) : null}
@@ -372,8 +390,9 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
 
 function RelatedCard({ task, post }: { task: TaskKey; post: SitePost }) {
   const image = getImages(post)[0]
+  const href = task === 'image' && post.slug ? `/image/${post.slug}` : buildPostUrl(task, post.slug)
   return (
-    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 rounded-2xl border border-[var(--editable-border)] bg-white p-3 transition hover:-translate-y-0.5 hover:shadow-lg">
+    <Link href={href} className="group flex gap-3 rounded-2xl border border-[var(--editable-border)] bg-white p-3 transition hover:-translate-y-0.5 hover:shadow-lg">
       {image && task !== 'sbm' ? <img src={image} alt="" className="h-20 w-20 shrink-0 rounded-xl object-cover" /> : <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[var(--detail-bg)]"><FileText className="h-6 w-6 opacity-45" /></div>}
       <div className="min-w-0">
         <h3 className="line-clamp-3 text-sm font-black leading-tight tracking-[-0.03em]">{post.title}</h3>
