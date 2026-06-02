@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { SITE_CONFIG } from '@/lib/site-config'
+import { useEditableLocalAuthSession } from '@/editable/components/EditableLocalAuthForms'
 
 export function EditableFooter() {
   const year = new Date().getFullYear()
@@ -20,6 +21,17 @@ export function EditableFooter() {
             <div className="mt-3 grid gap-2 text-sm">
               <Link href="/about" className="text-white/80 hover:text-white">About</Link>
               <Link href="/contact" className="text-white/80 hover:text-white">Contact</Link>
+              {session ? (
+                <>
+                  <Link href="/create" className="text-white/80 hover:text-white">Create</Link>
+                  <button type="button" onClick={logout} className="text-left text-white/80 hover:text-white">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="text-white/80 hover:text-white">Login</Link>
+                  <Link href="/signup" className="text-white/80 hover:text-white">Sign up</Link>
+                </>
+              )}
             </div>
           </div>
         </div>
