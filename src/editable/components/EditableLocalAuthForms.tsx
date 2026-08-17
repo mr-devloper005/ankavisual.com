@@ -31,8 +31,8 @@ const saveSession = (user: Pick<LocalUser, 'name' | 'email'>) => {
   window.dispatchEvent(new Event('slot4-auth-change'))
 }
 
-const inputClass = 'h-12 rounded-xl border border-white/15 bg-white/95 px-4 text-base font-bold text-[#0a0c10] outline-none transition placeholder:text-black/40 focus:border-[#79AE6F] focus:ring-2 focus:ring-[#79AE6F]/35'
-const buttonClass = 'inline-flex h-12 items-center justify-center rounded-xl bg-[linear-gradient(90deg,#346739,#79AE6F)] px-6 text-sm font-black uppercase tracking-[0.18em] text-[#F2EDC2] transition hover:brightness-110 disabled:opacity-60'
+const inputClass = 'h-12 border border-black/10 bg-white px-4 text-[15px] font-normal text-[#1a1a2e] outline-none transition placeholder:text-[#1a1a2e]/35 focus:border-[#5b21b6]'
+const buttonClass = 'inline-flex h-12 items-center justify-center bg-[#5b21b6] px-6 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-[#4c1d95] disabled:opacity-60'
 
 export function EditableLocalLoginForm() {
   const router = useRouter()
@@ -60,7 +60,7 @@ export function EditableLocalLoginForm() {
     <form className="mt-6 grid gap-4" onSubmit={submit}>
       <input className={inputClass} type="email" placeholder="Email address" value={email} onChange={(event) => setEmail(event.target.value)} required />
       <input className={inputClass} type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} required />
-      {message ? <p className={`rounded-2xl px-4 py-3 text-sm font-bold ${status === 'success' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700'}`}>{message}</p> : null}
+      {message ? <p className={`px-4 py-3 text-[13px] font-medium ${status === 'success' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700'}`}>{message}</p> : null}
       <button type="submit" className={buttonClass}>{pagesContent.auth.login.submitLabel}</button>
     </form>
   )
@@ -102,7 +102,7 @@ export function EditableLocalSignupForm() {
       <input className={inputClass} placeholder="Full name" value={name} onChange={(event) => setName(event.target.value)} required />
       <input className={inputClass} type="email" placeholder="Email address" value={email} onChange={(event) => setEmail(event.target.value)} required />
       <input className={inputClass} type="password" placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)} required />
-      {message ? <p className={`rounded-2xl px-4 py-3 text-sm font-bold ${status === 'success' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700'}`}>{message}</p> : null}
+      {message ? <p className={`px-4 py-3 text-[13px] font-medium ${status === 'success' ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-700'}`}>{message}</p> : null}
       <button type="submit" className={buttonClass}>{pagesContent.auth.signup.submitLabel}</button>
     </form>
   )
