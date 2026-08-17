@@ -1,57 +1,61 @@
 import Link from 'next/link'
-import { ArrowRight, SearchX } from 'lucide-react'
+import { ArrowUpRight, SearchX } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-type EmptyStateProps = {
+export function EmptyState({
+  title = 'Nothing here yet',
+  description = 'Content will appear here once published.',
+  actionLabel,
+  actionHref = '/',
+  className,
+}: {
   title?: string
   description?: string
   actionLabel?: string
   actionHref?: string
   className?: string
-}
-
-export function EmptyState({
-  title = 'Nothing published here yet',
-  description = 'Fresh posts will appear here automatically once this section has published content.',
-  actionLabel = 'Back to home',
-  actionHref = '/',
-  className,
-}: EmptyStateProps) {
+}) {
   return (
-    <section className={cn('rounded-[1.5rem] border border-black/10 bg-white p-8 text-center shadow-sm', className)}>
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-black/5">
-        <SearchX className="h-6 w-6" />
-      </div>
-      <h2 className="mt-5 text-2xl font-semibold tracking-[-0.03em]">{title}</h2>
-      <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-black/65">{description}</p>
-      <Link href={actionHref} className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/15 px-5 py-3 text-sm font-semibold transition hover:bg-black hover:text-white">
-        {actionLabel}
-        <ArrowRight className="h-4 w-4" />
-      </Link>
-    </section>
+    <div className={cn('border border-dashed border-black/12 py-20 text-center', className)}>
+      <SearchX className="mx-auto h-6 w-6 text-[#1a1a2e]/25" />
+      <h2 className="mt-5 text-[clamp(1.5rem,3vw,2.5rem)] font-light tracking-[-0.02em] text-[#1a1a2e]">{title}</h2>
+      <p className="mx-auto mt-3 max-w-md text-[14px] leading-[1.8] text-[#1a1a2e]/45">{description}</p>
+      {actionLabel ? (
+        <Link
+          href={actionHref}
+          className="mt-8 inline-flex items-center gap-2 border border-[#1a1a2e]/15 px-6 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-[#1a1a2e] transition hover:bg-[#1a1a2e] hover:text-white"
+        >
+          {actionLabel} <ArrowUpRight className="h-3.5 w-3.5" />
+        </Link>
+      ) : null}
+    </div>
   )
 }
 
-export function TaskEmptyState({ taskLabel = 'posts', className }: { taskLabel?: string; className?: string }) {
+export function TaskEmptyState({ taskLabel, className }: { taskLabel?: string; className?: string }) {
   return (
     <EmptyState
-      className={className}
-      title={`No ${taskLabel} available yet`}
-      description={`Published ${taskLabel} from the master panel will appear here automatically. The page layout stays ready even when the feed is empty.`}
-      actionLabel="Explore the site"
+      title={`No ${taskLabel || 'posts'} available yet`}
+      description="Try a different filter or check back after new content is published."
+      actionLabel="Browse all"
       actionHref="/"
+      className={className}
     />
   )
 }
 
 export function ContactSuccessState({ className }: { className?: string }) {
   return (
-    <EmptyState
-      className={className}
-      title="Message received"
-      description="Thanks for reaching out. Your request has been saved and routed through the contact workflow."
-      actionLabel="Return home"
-      actionHref="/"
-    />
+    <div className={cn('border border-black/6 bg-white py-16 text-center', className)}>
+      <div className="mx-auto flex h-14 w-14 items-center justify-center bg-emerald-50 text-emerald-600">
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h2 className="mt-5 text-[22px] font-light tracking-[-0.02em]">Message received</h2>
+      <p className="mx-auto mt-3 max-w-md text-[14px] leading-[1.8] text-[#1a1a2e]/45">
+        We received your message and will respond with the best next step.
+      </p>
+    </div>
   )
 }

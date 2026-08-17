@@ -38,36 +38,36 @@ export default function ContactPage() {
 
   return (
     <EditableSiteShell>
-      <main className="bg-[#ececec]">
-        <section className="mx-auto max-w-[1280px] px-4 py-14 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[1.75rem] border border-black/10 bg-white shadow-sm">
-            <div className="bg-[linear-gradient(120deg,#05070d,#172335)] px-7 py-10 text-white sm:px-10">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#9fcb98]">{pagesContent.contact.eyebrow}</p>
-              <h1 className="mt-4 max-w-4xl text-5xl font-black tracking-[-0.05em] sm:text-6xl">{pagesContent.contact.title}</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-8 text-white/75">{pagesContent.contact.description}</p>
-            </div>
+      <main className="bg-[#f5f5f0] text-[#1a1a2e]">
+        <section className="border-b border-black/6">
+          <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#5b21b6]">{pagesContent.contact.eyebrow}</p>
+            <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,6vw,5rem)] font-light leading-[0.92] tracking-[-0.03em]">{pagesContent.contact.title}</h1>
+            <p className="mt-6 max-w-2xl text-[15px] leading-[1.8] text-[#1a1a2e]/55 font-mono">{pagesContent.contact.description}</p>
+          </div>
+        </section>
 
-            <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[0.95fr_1.05fr]">
-              <div className="space-y-4">
-                {lanes.map((lane, index) => (
-                  <div key={lane.title} className="rounded-[1.25rem] border border-black/10 bg-[#f8f8f8] p-5">
-                    <div className="mt-2 flex items-start gap-3">
-                      <lane.icon className="mt-1 h-5 w-5" />
-                      <div>
-                        <h2 className="text-xl font-black tracking-[-0.03em]">{lane.title}</h2>
-                        <p className="mt-2 text-sm leading-7 text-black/70">{lane.body}</p>
-                      </div>
+        <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="space-y-4">
+              {lanes.map((lane) => (
+                <div key={lane.title} className="border border-black/6 bg-white p-6">
+                  <div className="flex items-start gap-4">
+                    <lane.icon className="mt-0.5 h-5 w-5 text-[#5b21b6]" />
+                    <div>
+                      <h2 className="text-[18px] font-medium tracking-[-0.01em]">{lane.title}</h2>
+                      <p className="mt-2 text-[14px] leading-[1.8] text-[#1a1a2e]/50">{lane.body}</p>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              <div className="rounded-[1.5rem] border border-black/10 bg-white p-6 shadow-sm sm:p-7">
-                <h2 className="text-3xl font-black tracking-[-0.04em]">{pagesContent.contact.formTitle}</h2>
-                <p className="mt-2 text-sm text-black/65">Tell us what you need and we will respond with the best next step.</p>
-                <div className="mt-5">
-                  <EditableContactLeadForm />
                 </div>
+              ))}
+            </div>
+
+            <div className="border border-black/6 bg-white p-6 sm:p-8">
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-light tracking-[-0.02em]">{pagesContent.contact.formTitle}</h2>
+              <p className="mt-2 text-[14px] text-[#1a1a2e]/45">Tell us what you need and we will respond with the best next step.</p>
+              <div className="mt-6">
+                <EditableContactLeadForm />
               </div>
             </div>
           </div>
