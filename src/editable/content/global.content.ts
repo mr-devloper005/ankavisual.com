@@ -10,38 +10,36 @@ export const globalContent = {
   nav: {
     tagline: '',
     primaryLinks: [
-      { label: 'Articles', href: '/articles' },
-      { label: 'Visuals', href: '/image-sharing' },
-      { label: 'Listings', href: '/listings' },
+      { label: 'Image', href: '/image' },
+      { label: 'Profile', href: '/profile' },
+      { label: 'About', href: '/about' },
       { label: 'Contact', href: '/contact' },
     ],
     actions: {
-      primary: { label: 'Start exploring', href: '/' },
-      secondary: { label: 'Submit', href: '/contact' },
+      primary: { label: 'Explore the latest', href: '/' },
+      secondary: { label: 'Get in touch', href: '/contact' },
     },
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
-    description: 'A connected publishing surface for articles, visuals, listings, profiles, bookmarks, and downloadable resources.',
+    tagline: 'Independent business culture',
+    description: 'A living index of founders, makers, visual thinkers, and practical ideas. Built to help business owners discover useful perspectives.',
     columns: [
       {
         title: 'Explore',
         links: [
-          { label: 'Articles', href: '/articles' },
-          { label: 'Listings', href: '/listings' },
-          { label: 'Images', href: '/image-sharing' },
-          { label: 'PDF Library', href: '/pdf' },
+          { label: 'Images', href: '/image' },
+          { label: 'Profiles', href: '/profile' },
         ],
       },
       {
-        title: 'Site',
+        title: 'Company',
         links: [
           { label: 'About', href: '/about' },
           { label: 'Contact', href: '/contact' },
         ],
       },
     ],
-    bottomNote: 'Built for clean discovery and connected publishing.',
+    bottomNote: 'Independent business culture.',
   },
   commonLabels: {
     readMore: 'Read more',

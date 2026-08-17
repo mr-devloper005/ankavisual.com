@@ -1,26 +1,37 @@
 import { cn } from '@/lib/utils'
 
-type LoadingStateProps = {
-  label?: string
-  className?: string
-}
-
 function PulseBlock({ className }: { className?: string }) {
-  return <div className={cn('animate-pulse rounded-xl bg-black/10', className)} />
+  return <div className={cn('animate-pulse bg-[#1a1a2e]/6', className)} />
 }
 
-export function PageLoadingState({ label = 'Loading page', className }: LoadingStateProps) {
+export function PageLoadingState({ label, className }: { label?: string; className?: string }) {
   return (
-    <div className={cn('mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8', className)} aria-live="polite" aria-busy="true">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-current/50">{label}</p>
-      <PulseBlock className="mt-5 h-12 w-3/4 max-w-3xl" />
-      <PulseBlock className="mt-4 h-5 w-2/3 max-w-2xl" />
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
-        {[0, 1, 2].map((item) => (
-          <div key={item} className="rounded-[2rem] border border-current/10 p-5">
-            <PulseBlock className="h-44 w-full" />
-            <PulseBlock className="mt-5 h-5 w-4/5" />
-            <PulseBlock className="mt-3 h-4 w-3/5" />
+    <div aria-busy="true" className={cn('mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12', className)}>
+      <PulseBlock className="h-3 w-32" />
+      <PulseBlock className="mt-6 h-14 max-w-2xl" />
+      <PulseBlock className="mt-4 h-14 max-w-xl" />
+      <PulseBlock className="mt-8 h-4 max-w-lg" />
+      <PulseBlock className="mt-2 h-4 max-w-md" />
+      {label ? <p className="mt-10 text-[13px] text-[#1a1a2e]/30">{label}</p> : null}
+    </div>
+  )
+}
+
+export function CardGridLoadingState({ count = 6, label, className }: { count?: number; label?: string; className?: string }) {
+  return (
+    <div aria-busy="true" className={cn('mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12', className)}>
+      {label ? <p className="mb-6 text-[13px] text-[#1a1a2e]/30">{label}</p> : null}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: count }).map((_, i) => (
+          <div key={i} className="border border-black/6 bg-white">
+            <PulseBlock className="aspect-[4/3]" />
+            <div className="p-5">
+              <PulseBlock className="h-2.5 w-20" />
+              <PulseBlock className="mt-3 h-5 w-full" />
+              <PulseBlock className="mt-2 h-5 w-3/4" />
+              <PulseBlock className="mt-4 h-3 w-full" />
+              <PulseBlock className="mt-1.5 h-3 w-2/3" />
+            </div>
           </div>
         ))}
       </div>
@@ -28,32 +39,29 @@ export function PageLoadingState({ label = 'Loading page', className }: LoadingS
   )
 }
 
-export function CardGridLoadingState({ count = 6, className }: LoadingStateProps & { count?: number }) {
+export function DetailLoadingState({ label, className }: { label?: string; className?: string }) {
   return (
-    <div className={cn('grid gap-5 sm:grid-cols-2 lg:grid-cols-3', className)} aria-live="polite" aria-busy="true">
-      {Array.from({ length: count }).map((_, index) => (
-        <div key={index} className="rounded-[1.75rem] border border-current/10 p-4">
-          <PulseBlock className="h-40 w-full" />
-          <PulseBlock className="mt-4 h-5 w-5/6" />
-          <PulseBlock className="mt-3 h-4 w-2/3" />
-          <PulseBlock className="mt-6 h-9 w-32 rounded-full" />
+    <div aria-busy="true" className={cn('mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-12', className)}>
+      <PulseBlock className="h-8 w-36" />
+      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="border border-black/6 bg-white p-6 sm:p-10">
+          <PulseBlock className="h-3 w-24" />
+          <PulseBlock className="mt-4 h-12 w-full" />
+          <PulseBlock className="mt-3 h-12 w-3/4" />
+          <PulseBlock className="mt-10 aspect-[16/9] w-full" />
+          <PulseBlock className="mt-8 h-4 w-full" />
+          <PulseBlock className="mt-2 h-4 w-full" />
+          <PulseBlock className="mt-2 h-4 w-2/3" />
         </div>
-      ))}
-    </div>
-  )
-}
-
-export function DetailLoadingState({ label = 'Loading detail', className }: LoadingStateProps) {
-  return (
-    <div className={cn('mx-auto grid w-full max-w-6xl gap-8 px-4 py-12 lg:grid-cols-[0.8fr_1.2fr]', className)} aria-live="polite" aria-busy="true">
-      <PulseBlock className="h-80 w-full rounded-[2rem]" />
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-current/50">{label}</p>
-        <PulseBlock className="mt-5 h-12 w-4/5" />
-        <PulseBlock className="mt-5 h-4 w-full" />
-        <PulseBlock className="mt-3 h-4 w-5/6" />
-        <PulseBlock className="mt-3 h-4 w-2/3" />
+        <div>
+          <div className="border border-black/6 bg-white p-5">
+            <PulseBlock className="h-3 w-32" />
+            <PulseBlock className="mt-4 h-4 w-full" />
+            <PulseBlock className="mt-2 h-4 w-3/4" />
+          </div>
+        </div>
       </div>
+      {label ? <p className="mt-10 text-[13px] text-[#1a1a2e]/30">{label}</p> : null}
     </div>
   )
 }
